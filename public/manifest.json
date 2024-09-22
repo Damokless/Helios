@@ -3,6 +3,12 @@
 	"name": "Helios",
 	"description": "Base Level Extension",
 	"version": "1.0",
+	"permissions": [
+		"webRequest"
+	  ],
+	  "host_permissions": [
+		"<all_urls>"
+	  ],
 	"action": {
 	  "default_popup": "index.html",
 	  "default_icon": "vite.svg"
