@@ -1,24 +1,36 @@
-function App() {
-  async function fetchData(headers : HeadersInit, url : string) {
-    await fetch(url, {method : 'post', headers, body :'sessionName=AdminSession&controller=MobileScheduleDisplayController&method=getViewList&params=%7B%22startDate%22:%2221-9-2024%22,%22endDate%22:%2222-10-2024%22%7D'}).then((res) => res.json()).then((data) => {console.log(data)})
-  }
-  let headers = {}
-    chrome.webRequest.onBeforeSendHeaders.addListener(
-      function (details) {
-        if (details.url === "https://disneyeu.kronos.net/wfc/applications/KSSHELPERS/html/ajaxHelper.jsp") {
-          headers = details.requestHeaders?.reduce((obj, item)=> ({ ...obj, [item.name] : item.value})) as object
-          fetchData(headers, details.url)
-        }
-      },
-      { urls: ["<all_urls>"] },
-      ['requestHeaders', 'extraHeaders']
-    )
+import { useState } from "react";
 
-  return (
-    <h1 className="text-3xl font-bold underline text-pink-500">
-      Hello World
-    </h1>
-  );
+function App() {
+    const [data, setData] = useState([])
+    async function fetchData(headers: HeadersInit, url: string) {
+        await fetch(url, {
+            method: 'post',
+            headers,
+            body: 'sessionName=AdminSession&controller=MobileScheduleDisplayController&method=getViewList&params=%7B%22startDate%22:%2212-1-2025%22,%22endDate%22:%2219-1-2025%22%7D',
+        }).then((res) => res.json()).then((data) => { setData(data); });
+    }
+
+    let headers: Record<string, string> = {};
+
+    function getRequestHeaders(details: chrome.webRequest.WebRequestHeadersDetails) {
+            headers = details.requestHeaders?.reduce((obj, item) => ({ ...obj, [item.name]: item.value }), {}) as Record<string, string>;
+            console.log(fetchData(headers, details.url));
+
+            chrome.webRequest.onBeforeSendHeaders.removeListener(getRequestHeaders);
+    };
+
+    chrome.webRequest.onBeforeSendHeaders.addListener(
+        getRequestHeaders,
+        { urls: ["https://disneyeu.kronos.net/wfc/applications/KSSHELPERS/html/ajaxHelper.jsp"] },
+        ['requestHeaders', 'extraHeaders']
+    );
+
+    return (
+        <div>
+            <h1>test display</h1>
+            {data}
+        </div>
+    );
 }
 
 export default App;
