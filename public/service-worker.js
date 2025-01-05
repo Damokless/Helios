@@ -1,7 +1,9 @@
 function getRequestHeaders(details) {
-        console.log(details.requestHeaders?.reduce((obj, item) => ({ ...obj, [item.name]: item.value }), {}));
         chrome.storage.local.set({
-            kronosHeaders : details.requestHeaders?.reduce((obj, item) => ({ ...obj, [item.name]: item.value }), {})
+            kronosHeaders : details.requestHeaders?.reduce((obj, item) => ({ ...obj, [item.name]: item.value }), {}),
+          });
+          chrome.storage.local.set({
+            kronosUrl : details.url
           });
 
         chrome.webRequest.onBeforeSendHeaders.removeListener(getRequestHeaders);
