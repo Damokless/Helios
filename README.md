@@ -1,50 +1,72 @@
-# React + TypeScript + Vite
+# ☀️ Helios
+Helios est une extension Chrome légère et rapide pour interagir avec Kronos et générer des fichiers .ics (calendrier) à partir de vos données de planning.
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Construite avec ❤️ en TypeScript, Vite et TailwindCSS pour offrir une expérience ultra fluide.
 
-Currently, two official plugins are available:
+# 🚀 Fonctionnalités
+ - 📅 Extraction automatique des plannings depuis Kronos
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+ - 📝 Génération d'un fichier .ics pour votre calendrier
 
-## Expanding the ESLint configuration
+ - ⚡ Interface rapide et minimaliste
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+- 🔒 100% local, aucune donnée transmise sur Internet
 
-- Configure the top-level `parserOptions` property like this:
+# 🛠️ Stack Technique
+- TypeScript
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+- Vite
+
+- React
+
+- TailwindCSS
+
+- Chrome Extension (Manifest v3)
+
+# 🔥 Installation rapide
+1. Télécharger l'extension
+
+- Récupérez la dernière version du fichier .crx ici : [Releases](https://github.com/Damokless/Helios/releases).
+
+2. Installer sur Chrome
+
+- Ouvrez chrome://extensions/
+
+- Activez Mode développeur (coin supérieur droit)
+
+- Faites un glisser-déposer du fichier .crx sur la page
+
+- Validez l'installation
+
+# 🧩 Développement local
+Clonez ce repo :
+
+```bash
+git clone https://github.com/Damokless/helios.git
+cd helios
+```
+Installez les dépendances :
+
+```bash
+npm install
+ou
+yarn install
 ```
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
+# 🏗️ Build pour production
+Générez votre build optimisé :
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
-
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
+```bash
+npm run build
+ou
+yarn build
 ```
+
+Les fichiers finaux seront disponibles dans /dist.
+
+# ✨ Contribuer
+Les contributions sont les bienvenues !
+N'hésitez pas à ouvrir des issues ou proposer des pull requests pour améliorer Helios.
+
+# 📜 Licence
+Ce projet est sous licence MIT.
