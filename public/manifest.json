@@ -1,7 +1,7 @@
 {
     "manifest_version": 3,
     "name": "Helios",
-    "description": "Base Level Extension",
+    "description": "Helios est une extension Chrome légère et rapide pour interagir avec Kronos et générer des fichiers .ics (calendrier) à partir de vos données de planning.",
     "version": "1.0",
     "permissions": [
         "webRequest",
