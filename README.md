@@ -1,4 +1,10 @@
-# ☀️ Helios
+<div align="center">
+<img src="./public/icon128.png" align="center" />
+</div>
+<br>
+
+## <div align="center">☀️ Helios</div>
+ <br />
 Helios est une extension Chrome légère et rapide pour interagir avec Kronos et générer des fichiers .ics (calendrier) à partir de vos données de planning.
 
 Construite avec ❤️ en TypeScript, Vite et TailwindCSS pour offrir une expérience ultra fluide.
