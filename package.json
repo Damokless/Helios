@@ -10,6 +10,9 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@heroui/input": "^2.4.19",
+    "@heroui/system": "^2.4.15",
+    "@heroui/theme": "^2.4.15",
     "@internationalized/date": "^3.6.0",
     "@nextui-org/button": "^2.2.8",
     "@nextui-org/date-picker": "^2.3.8",
@@ -20,8 +23,8 @@
     "framer-motion": "^11.15.0",
     "ics": "^3.8.1",
     "moment": "^2.30.1",
-    "react": "^18.3.1",
-    "react-dom": "^18.3.1"
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0"
   },
   "devDependencies": {
     "@eslint/js": "^9.9.0",
