@@ -69,8 +69,6 @@ yarn build
 ```
 
 Les fichiers finaux seront disponibles dans /dist.
-# TODOLIST
-- [ ] Input pour mettre un nom personalisé sur les évenements ( actuellement le nom par défaut c'est "Shift Alex" )
 
 # ✨ Contribuer
 Les contributions sont les bienvenues !
