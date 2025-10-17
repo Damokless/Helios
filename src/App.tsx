@@ -1,52 +1,100 @@
-import { getLocalTimeZone, today } from '@internationalized/date'
+import { Button } from '@heroui/button'
+import { useState } from 'react'
 import type { RangeValue } from '@react-types/shared'
 import type { DateValue } from '@react-types/datepicker'
-import { DateRangePicker } from '@nextui-org/date-picker'
-import { useState } from 'react'
-import fetchKronosData from './functions/fetchKronosData'
-import KronosData from './interface/IkronosData'
-import clearKronosData from './functions/clearKronosData'
-import ButtonConditional from './components/Button'
-import DateTable from './components/DateTable'
+import { DateRangePicker } from '@heroui/date-picker'
+import { Table, TableHeader, TableColumn, TableBody, TableRow, TableCell } from '@heroui/table'
+import { getLocalTimeZone, today } from '@internationalized/date'
+import moment from 'moment'
+import fetch_calendar from './functions/fetch_calendar'
+import handle_calendar_data from './functions/modify_calendar_data'
+import type TCalendar from './types/Tcalendar'
+import create_ics_file from './functions/create_ics_file'
+import { Input } from '@heroui/input'
 
-function App() {
-    const [date, setDate] = useState<RangeValue<DateValue> | null>({
+export default function App() {
+    const [date, setDate] = useState<RangeValue<DateValue>>({
         start: today(getLocalTimeZone()),
         end  : today(getLocalTimeZone())
     })
 
-    const [schedule, setSchedule] = useState<Array<KronosData>>([])
+    const [shifts, setShifts] = useState<Array<{ shift_start: string; shift_end: string }>>([])
 
-    async function getSchedule() {
-        const kronosData = await fetchKronosData(date)
+    const [title , setTitle] = useState<string>('')
 
-        const clearSchedule = await clearKronosData(kronosData)
+    async function handleChange(start: DateValue, end: DateValue) {
+        const calendar_data : TCalendar = await fetch_calendar(moment(start.toString()).format('YYYY-MM-DD'), moment(end.toString()).format('YYYY-MM-DD'))
 
-        setSchedule(clearSchedule)
+        const clean_data = await handle_calendar_data(calendar_data)
+
+        setShifts(clean_data)
     }
 
-    function handleChange(start: DateValue, end: DateValue) {
-        setSchedule([])
+    async function handleDownload() {
+        const ics_file = create_ics_file(shifts, title)
 
-        setDate({
-            start,
-            end
-        })
+        if (ics_file) {
+            const blob = new Blob([ics_file], { type: 'text/plain' })
+
+            const fileURL = URL.createObjectURL(blob)
+
+            const link = document.createElement('a')
+
+            link.href = fileURL
+
+            link.download = 'shifts.ics'
+
+            link.click()
+
+            URL.revokeObjectURL(fileURL)
+        }
     }
 
     return (
-        <div className='min-w-80 min-h-96 bg-[#191919] rounded'>
+        <div className='min-w-80 min-h-96 bg-[#191919]'>
+            {/* Header */}
+            <div>
+                <h1 className='text-3xl font-bold text-center text-white'>Helios</h1>
+            </div>
+            {/* calendar */}
             <div className='flex justify-center items-center'>
-                <DateRangePicker label='Date range (controlled)' value={date} onChange={(e) => e == null ? '' : handleChange(e.start, e.end)} />
+                <DateRangePicker
+                    label='Select period time'
+                    value={date}
+                    onChange={(e) => {
+                        if (e) {
+                            handleChange(e.start, e.end)
+
+                            setDate({
+                                start: e.start,
+                                end  : e.end
+                            })
+                        }
+                    }}
+                />
             </div>
-            <div className=' flex justify-center items-center'>
-                <ButtonConditional date={date} getSchedule={getSchedule} />
-            </div>
-            <div className=' flex flex-col justify-center items-center p-3'>
-                <DateTable schedule={schedule} />
-            </div>
+            {/* Shifts table */}
+            {shifts.length > 0 && (
+                <><Table isStriped>
+                    <TableHeader>
+                        <TableColumn>DATE</TableColumn>
+                        <TableColumn>HOURS</TableColumn>
+                    </TableHeader>
+                    <TableBody>
+                        {shifts.map((shift) => (
+                            <TableRow key={moment(shift.shift_start, 'DD-MM-YYYY HH:mm').format('DD/MM/YYYY')}>
+                                <TableCell>{moment(shift.shift_start, 'DD-MM-YYYY HH:mm').format('DD/MM/YYYY')}</TableCell>
+                                <TableCell>{`${moment(shift.shift_start, 'DD-MM-YYYY HH:mm').format('HH:mm')} - ${moment(shift.shift_end, 'DD-MM-YYYY HH:mm').format('HH:mm')}`}</TableCell>
+                            </TableRow>
+                        ))}
+                    </TableBody>
+                </Table>
+                <Input label='Name of your shifts' type='text' value={title} onValueChange={(e) => setTitle(e)} />
+                <Button variant='solid' color='primary' onPress={() => handleDownload()}>
+                        Download Shifts
+                </Button>
+                </>
+            )}
         </div>
     )
 }
-
-export default App

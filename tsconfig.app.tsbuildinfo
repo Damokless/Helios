@@ -1,1 +1,0 @@
-{"root":["./src/app.tsx","./src/main.tsx","./src/vite-env.d.ts","./src/components/button.tsx","./src/components/datetable.tsx","./src/functions/clearkronosdata.ts","./src/functions/createicsfile.ts","./src/functions/fetchkronosdata.ts","./src/interface/ikronosdata.ts"],"version":"5.6.2"}

@@ -11,6 +11,6 @@ function getRequestHeaders(details) {
 
 chrome.webRequest.onBeforeSendHeaders.addListener(
     getRequestHeaders,
-    { urls: ["https://disneyeu.kronos.net/wfc/applications/KSSHELPERS/html/ajaxHelper.jsp"] },
+    { urls: ["https://eurodisney-sso.prd.mykronos.com/myschedule/events"] },
     ['requestHeaders', 'extraHeaders']
 );
