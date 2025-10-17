@@ -11,8 +11,9 @@ export default function create_ics_file(shifts : TShifts[], title: string) {
         const endDate = moment(shift.shift_end, 'DD-MM-YYYY-HH-mm')
 
         eventsArray.push({
-            title: title + ' 🏰🐭' || 'Disney 🏰🐭',
-            start: [
+            title      : title + ' 🏰🐭' || 'Disney 🏰🐭',
+            description: shift.description || '',
+            start      : [
                 startDate.year(),
                 startDate.month() + 1,
                 startDate.date(),

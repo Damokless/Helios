@@ -7,6 +7,10 @@ export default interface TCalendar {
     segments: Array<{
       startDateTime: string;
       endDateTime: string;
+      orgJobRef: {
+        id: number;
+        qualifier: string;
+      };
     }>;
   }>;
 }

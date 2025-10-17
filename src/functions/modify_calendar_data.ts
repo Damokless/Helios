@@ -11,21 +11,24 @@ export default async function handle_calendar_data(calendar: TCalendar) {
 
             shifts.push({
                 shift_start: moment(shift.startDateTime).format('DD-MM-YYYY') + ' ' + shift_start_time,
-                shift_end  : moment(shift.endDateTime).format('DD-MM-YYYY') + ' ' + shift_end_time
+                shift_end  : moment(shift.endDateTime).format('DD-MM-YYYY') + ' ' + shift_end_time,
+                description: shift.segments[0].orgJobRef.qualifier.split('/')[0] || 'No description'
             })
         }
         // this exception is for Parc Ops shifts that have more segments
         else if (shift.segments.length > 1) {
             shifts.push({
                 shift_start: moment(shift.segments[1].startDateTime).format('DD-MM-YYYY HH:mm'),
-                shift_end  : moment(shift.segments.at(-1)?.endDateTime).format('DD-MM-YYYY HH:mm')
+                shift_end  : moment(shift.segments.at(-1)?.endDateTime).format('DD-MM-YYYY HH:mm'),
+                description: shift.segments[0].orgJobRef.qualifier.split('/')[0] || 'No description'
             })
         }
         // this exception is for shifts without label and only one segmen, typicaly EPC shifts
         else {
             shifts.push({
                 shift_start: moment(shift.startDateTime).format('DD-MM-YYYY HH:mm'),
-                shift_end  : moment(shift.endDateTime).format('DD-MM-YYYY HH:mm')
+                shift_end  : moment(shift.endDateTime).format('DD-MM-YYYY HH:mm'),
+                description: shift.segments[0].orgJobRef.qualifier.split('/')[0] || 'No description'
             })
         }
     }

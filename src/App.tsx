@@ -18,7 +18,7 @@ export default function App() {
         end  : today(getLocalTimeZone())
     })
 
-    const [shifts, setShifts] = useState<Array<{ shift_start: string; shift_end: string }>>([])
+    const [shifts, setShifts] = useState<Array<{ shift_start: string; shift_end: string; description: string }>>([])
 
     const [title , setTitle] = useState<string>('')
 
