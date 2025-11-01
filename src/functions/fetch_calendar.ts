@@ -40,9 +40,23 @@ export default async function fetch_calendar(start_date: string, end_date: strin
             }
         })
     }).then((res) => res.json()).then((data) => {
-        console.log(data)
+        console.log({
+            transferShifts: [
+                ...new Set([
+                    ...data.transferShifts,
+                    ...data.regularShifts
+                ])
+            ]
+        })
 
-        return { transferShifts: data.transferShifts }
+        return {
+            transferShifts: [
+                ...new Set([
+                    ...data.transferShifts,
+                    ...data.regularShifts
+                ])
+            ]
+        }
     })
 
     return kronosData
