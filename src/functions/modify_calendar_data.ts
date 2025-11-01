@@ -35,7 +35,5 @@ export default async function handle_calendar_data(calendar: TCalendar) {
         }
     }
 
-    console.log(shifts)
-
     return shifts
 }
